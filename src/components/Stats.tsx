@@ -1,9 +1,6 @@
 import { motion } from "motion/react"
-import { SparkleIcon } from "lucide-react"
 import { fadeUp, staggerContainer } from "@/lib/animations"
-import { Button } from "./ui/button"
 import { statsData } from "@/constants"
-
 
 
 
