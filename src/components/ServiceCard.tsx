@@ -1,6 +1,4 @@
 
-
-
 import type { ServiceType } from "@/types"
 
 
