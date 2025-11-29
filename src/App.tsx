@@ -3,6 +3,7 @@ import { Button } from "./components/ui/button"
 import { Hero } from "./components/Hero"
 import { Stats } from "./components/Stats"
 import { Projects } from "./components/Projects"
+import { About } from "./components/About"
 
 
 
@@ -14,6 +15,7 @@ export const App = () => {
       <Hero />
       <Stats />
       <Projects />
+      <About />
     </main>
   )
 }
