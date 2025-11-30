@@ -5,6 +5,7 @@ import { Projects } from "./components/Projects"
 import { About } from "./components/About"
 import { Services } from "./components/Services"
 import { Resume } from "./components/Resume"
+import { Testimonials } from "./components/Testimonials"
 
 
 
@@ -19,6 +20,7 @@ export const App = () => {
       <About />
       <Services />
       <Resume />
+      <Testimonials />
     </main>
   )
 }
