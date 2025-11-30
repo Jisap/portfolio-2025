@@ -2,7 +2,8 @@ import { testimonials } from "@/constants"
 import { fadeUp } from "@/lib/animations"
 import { ChevronLeftIcon, ChevronRightIcon, SparkleIcon, StarIcon } from "lucide-react"
 import { AnimatePresence, motion } from "motion/react"
-import { useState } from "react"
+import { useEffect, useState } from "react"
+import { cn } from "@/lib/utils"
 
 
 
@@ -10,9 +11,21 @@ import { useState } from "react"
 export const Testimonials = () => {
 
   const [curSlide, setCurSlide] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
 
   const next = () => setCurSlide((prev) => (prev + 1) % testimonials.length);
   const prev = () => setCurSlide((prev) => (prev - 1 + testimonials.length) % testimonials.length);
+
+  // Autoplay functionality
+  useEffect(() => {
+    if (isPaused) return;
+
+    const interval = setInterval(() => {
+      next();
+    }, 5000);
+
+    return () => clearInterval(interval);
+  }, [curSlide, isPaused]);
 
   return (
     <motion.section
@@ -22,6 +35,8 @@ export const Testimonials = () => {
       variants={fadeUp}
       className="mt-20 scroll-mt-10"
       id="testimonial"
+      onMouseEnter={() => setIsPaused(true)}
+      onMouseLeave={() => setIsPaused(false)}
     >
       <p className="flex items-center justify-center py-1 gap-2 border border-neutral-600 rounded-sm w-32">
         <SparkleIcon size={15} /> Reviews
@@ -84,14 +99,38 @@ export const Testimonials = () => {
           </motion.div>
         </AnimatePresence>
 
+        {/* Navigation buttons */}
         <div className="flex gap-2 mt-8">
-          <button className="size-10 flex items-center justify-center rounded-full border border-neutral-700 hover:bg-neutral-800 transition">
-            <ChevronLeftIcon size={18} onClick={prev} />
+          <button
+            onClick={prev}
+            className="size-10 flex items-center justify-center rounded-full border border-neutral-700 hover:bg-neutral-800 hover:border-primary transition"
+          >
+            <ChevronLeftIcon size={18} />
           </button>
 
-          <button className="size-10 flex items-center justify-center rounded-full border border-neutral-700 hover:bg-neutral-800 transition">
-            <ChevronRightIcon size={18} onClick={next} />
+          <button
+            onClick={next}
+            className="size-10 flex items-center justify-center rounded-full border border-neutral-700 hover:bg-neutral-800 hover:border-primary transition"
+          >
+            <ChevronRightIcon size={18} />
           </button>
+        </div>
+
+        {/* Dot indicators */}
+        <div className="flex gap-2 justify-center mt-4">
+          {testimonials.map((_, i) => (
+            <button
+              key={i}
+              onClick={() => setCurSlide(i)}
+              className={cn(
+                "h-2 rounded-full transition-all duration-300",
+                i === curSlide
+                  ? "w-8 bg-primary"
+                  : "w-2 bg-neutral-600 hover:bg-neutral-500"
+              )}
+              aria-label={`Go to testimonial ${i + 1}`}
+            />
+          ))}
         </div>
       </div>
     </motion.section>

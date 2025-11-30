@@ -27,22 +27,30 @@ export const Hero = () => {
         variants={fadeUp}
         className="text-4xl md:text-5xl lg:text-6xl font-semibold capitalize mt-2 max-w-3xl md:leading-16"
       >
-        I'm <span className="text-primary">David</span> UI/UX designer and frontend developer
+        I'm{" "}
+        <span className="bg-gradient-to-r from-primary via-neutral-200 to-primary bg-clip-text text-transparent animate-gradient">
+          David
+        </span>{" "}
+        UI/UX designer and frontend developer
       </motion.h1>
 
       <motion.div
         variants={fadeUp}
         className="mt-5 flex gap-2"
       >
-        <Button asChild>
-          <a href="#projects">
-            My projects
-          </a>
-        </Button>
+        <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+          <Button asChild className="shadow-lg shadow-primary/20 hover:shadow-primary/40 transition-shadow">
+            <a href="#projects">
+              My projects
+            </a>
+          </Button>
+        </motion.div>
 
-        <Button variant="outline">
-          Download CV
-        </Button>
+        <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+          <Button variant="outline" className="hover:bg-primary hover:text-gray-500  transition-colors">
+            Download CV
+          </Button>
+        </motion.div>
       </motion.div>
     </motion.section>
   )

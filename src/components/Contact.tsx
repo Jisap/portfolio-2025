@@ -6,6 +6,8 @@ import { Textarea } from "./ui/textarea"
 import { Button } from "./ui/button"
 import { SectionHeader } from "./SectionHeader"
 import { fadeUp } from "@/lib/animations"
+import { Check, Loader2 } from "lucide-react"
+import { useState } from "react"
 
 
 type ContactFormValues = {
@@ -21,6 +23,9 @@ type ContactFormValues = {
 
 export const Contact = () => {
 
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
+
   const form = useForm<ContactFormValues>({
     defaultValues: {
       name: "",
@@ -31,8 +36,21 @@ export const Contact = () => {
     }
   });
 
-  const onSubmit = (values: ContactFormValues) => {
+  const onSubmit = async (values: ContactFormValues) => {
+    setIsSubmitting(true);
     console.log(values);
+
+    // Simulate API call
+    await new Promise(resolve => setTimeout(resolve, 2000));
+
+    setIsSubmitting(false);
+    setIsSuccess(true);
+
+    // Reset success state after 3 seconds
+    setTimeout(() => {
+      setIsSuccess(false);
+      form.reset();
+    }, 3000);
   }
 
   return (
@@ -64,6 +82,7 @@ export const Contact = () => {
                       placeholder="Your name"
                       {...field}
                       className="border-0"
+                      disabled={isSubmitting}
                     />
                   </FormControl>
                   <FormMessage />
@@ -80,6 +99,7 @@ export const Contact = () => {
                       placeholder="Company name"
                       {...field}
                       className="border-0"
+                      disabled={isSubmitting}
                     />
                   </FormControl>
                   <FormMessage />
@@ -97,6 +117,7 @@ export const Contact = () => {
                       placeholder="you@example.com"
                       {...field}
                       className="border-0"
+                      disabled={isSubmitting}
                     />
                   </FormControl>
                   <FormMessage />
@@ -114,6 +135,7 @@ export const Contact = () => {
                       placeholder="+1234567890"
                       {...field}
                       className="border-0"
+                      disabled={isSubmitting}
                     />
                   </FormControl>
                   <FormMessage />
@@ -131,6 +153,7 @@ export const Contact = () => {
                     placeholder="Your message"
                     {...field}
                     className="h-36 border-0"
+                    disabled={isSubmitting}
                   />
                 </FormControl>
                 <FormMessage />
@@ -138,8 +161,29 @@ export const Contact = () => {
             )}
           />
 
-          <Button type="submit" size="lg">
-            Send Message
+          <Button
+            type="submit"
+            size="lg"
+            disabled={isSubmitting || isSuccess}
+            className="relative"
+          >
+            {isSubmitting ? (
+              <>
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                Sending...
+              </>
+            ) : isSuccess ? (
+              <motion.span
+                initial={{ scale: 0 }}
+                animate={{ scale: 1 }}
+                className="flex items-center gap-2"
+              >
+                <Check className="h-4 w-4" />
+                Sent Successfully!
+              </motion.span>
+            ) : (
+              'Send Message'
+            )}
           </Button>
         </form>
       </Form>

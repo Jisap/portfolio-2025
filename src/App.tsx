@@ -7,6 +7,8 @@ import { Services } from "./components/Services"
 import { Resume } from "./components/Resume"
 import { Testimonials } from "./components/Testimonials"
 import { Contact } from "./components/Contact"
+import { ScrollProgress } from "./components/ScrollProgress"
+import { Sidebar } from "./components/Sidebar"
 import Lenis from "lenis"
 import { useEffect } from "react"
 
@@ -29,16 +31,20 @@ export const App = () => {
   }, [])
 
   return (
-    <main className="flex flex-col container mx-auto p-10 max-w-4xl lg:pr-10 lg:pl-0 lg:max-w-6xl">
-      <Hero />
-      <Stats />
-      <Projects />
-      <About />
-      <Services />
-      <Resume />
-      <Testimonials />
-      <Contact />
-    </main>
+    <>
+      <ScrollProgress />
+      <Sidebar />
+      <main className="flex flex-col container mx-auto p-10 max-w-4xl lg:pr-10 lg:pl-0 lg:max-w-6xl">
+        <Hero />
+        <Stats />
+        <Projects />
+        <About />
+        <Services />
+        <Resume />
+        <Testimonials />
+        <Contact />
+      </main>
+    </>
   )
 }
 
